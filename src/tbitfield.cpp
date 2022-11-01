@@ -14,7 +14,7 @@ TBitField::TBitField(int len)
 		throw "Negative lenght";
 	}
 	BitLen = len;
-	MemLen = (BitLen) / (sizeof(TELEM) * 8) + 1;
+	MemLen = (((sizeof(TELEM) * 8) - 1 + BitLen) / (sizeof(TELEM) * 8));
 	pMem = new TELEM[MemLen];
 	memset(pMem, 0, MemLen * sizeof(TELEM));
 }
@@ -77,7 +77,14 @@ int TBitField::GetBit(const int n) const // получить значение б
 {
 	if (n >= 0 && n < BitLen)
 	{
-		return pMem[GetMemIndex(n)] & GetMemMask(n);
+		if (pMem[GetMemIndex(n)] & GetMemMask(n))
+		{
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 	else
 	{
