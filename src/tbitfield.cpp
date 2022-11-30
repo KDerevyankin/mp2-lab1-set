@@ -206,13 +206,17 @@ istream& operator>>(istream& istr, TBitField& bf) // ввод
 	for (size_t i = 0; i < bf.BitLen; i++)
 	{
 		istr >> tmp;
-		if (tmp)
+		if (tmp == '1')
 		{
 			bf.SetBit(tmp);
 		}
-		else
+		else if (tmp == '0')
 		{
 			bf.ClrBit(tmp);
+		}
+		else
+		{
+			throw ("Invalid input");
 		}
 	}
 	return istr;
